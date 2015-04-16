@@ -12,9 +12,19 @@ private:
 	string password;
 	//0 表示超级管理员 1表示普通管理员。默认为1
 	int role;
+
 public:
 	Admin();
 	Admin(string,string,string);
-	~Admin();
+	void setID(int);
+	void setEmail(string);
+	void setName(string);
+	void setPassword(string);
+	void setRole(int);
+	int getID();
+	string getEmail();
+	string getName();
+	string getPassword();
+	int getRole();
 };
 

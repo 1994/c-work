@@ -53,7 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>E:\gitworkplace\hiberlite\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
@@ -86,23 +86,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
+    <ClInclude Include="AdminOpe.h" />
     <ClInclude Include="C:\Users\reeco_000\Downloads\sqlite-amalgamation-201504150916\sqlite3.h" />
     <ClInclude Include="DbException.h" />
     <ClInclude Include="DbHelper.h" />
     <ClInclude Include="DbQuery.h" />
     <ClInclude Include="DbStatement.h" />
     <ClInclude Include="DbTable.h" />
-    <ClInclude Include="student.h" />
+    <ClInclude Include="Student.h" />
+    <ClInclude Include="StudentOpe.h" />
     <ClInclude Include="Tool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
+    <ClCompile Include="AdminOpe.cpp" />
     <ClCompile Include="DbException.cpp" />
     <ClCompile Include="DbHelper.cpp" />
     <ClCompile Include="DbQuery.cpp" />
     <ClCompile Include="DbStatement.cpp" />
     <ClCompile Include="DbTable.cpp" />
-    <ClCompile Include="student.cpp" />
+    <ClCompile Include="Student.cpp" />
+    <ClCompile Include="StudentOpe.cpp" />
     <ClCompile Include="Tool.cpp" />
     <ClCompile Include="ToolTest.cpp" />
   </ItemGroup>
