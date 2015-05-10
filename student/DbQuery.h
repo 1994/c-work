@@ -19,18 +19,23 @@ public:
 	int FieldNums();
 
 	int FieldIndex(const char* szField);
+
 	const char* FieldName(int nField);
 
 	int FieldDataType(int nField);
+
 	const char* FieldDeclType(int nField);
 
 	const char* FieldValue(int nField);
+
 	const char* FieldValue(const char *szField);
 
 	bool FieldIsNull(int nField);
+	
 	bool FieldIsNull(const char *szField);
 
 	bool GetIntValue(int nField, int &rDest);
+
 	bool GetIntValue(const char *szField, int &rDest);
 
 	bool GetFloatValue(int nField, double &rDest);
@@ -38,6 +43,8 @@ public:
 
 	bool GetStringValue(int nField, char *&rDest);
 	bool GetStringValue(const char *szField, char *&rDest);
+
+	char* GetString(int nField);
 
 	bool Eof();
 

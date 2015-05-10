@@ -105,10 +105,10 @@
     <ClCompile Include="DbQuery.cpp" />
     <ClCompile Include="DbStatement.cpp" />
     <ClCompile Include="DbTable.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="StudentOpe.cpp" />
     <ClCompile Include="Tool.cpp" />
-    <ClCompile Include="ToolTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\reeco_000\Downloads\sqlite-dll-win32-x86-3080900\sqlite3.dll" />

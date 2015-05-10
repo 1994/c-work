@@ -18,34 +18,34 @@ Student StudentOpe::login(string email, string pass)
 	//cout << sql << endl;
 	DbQuery query = db.ExecQuery(sql);
 
-	int id;
-	char* NO;
-	char* name;
-	char* s_email;
-	char* sex;
-	int age;
-	char* class_name;
-	if (query.Eof())
-	{
-		query.GetIntValue(0, id);
-		query.GetStringValue(1, NO);
-		query.GetStringValue(2, name);
-		query.GetStringValue(3, s_email);
-		query.GetStringValue(4, sex);
-		query.GetIntValue(5, age);
-		query.GetStringValue(6, class_name);
-		query.Finalize();
-		return Student(id, NO, name, s_email, sex, age, class_name);
-	}
-	cout << "用户名或者密码错误" << endl;
-	return Student();
+	if (!query.Eof())
+	{	
 
+		string number = query.GetString(1);
+		string name = query.GetString(2);;
+		string email = query.GetString(3);
+		string sex = query.GetString(4);
+		int age;
+		query.GetIntValue(5, age);
+		string className = query.GetString(6);
+		string pass = query.GetString(7);
+		query.Finalize();
 	
+		return Student(number, name, email, sex, age, className, pass);
+	}
+	//cout << "用户名或者密码错误" << endl;
+	else
+	{
+		Student stu;
+		stu.Id(-1);
+		return stu;
+	}
+		//return Student();
 }
 
 bool StudentOpe::update(string update, string NO, int type)
 {
-	string base = "UPDATE student SET";
+	string base = "UPDATE student SET ";
 	//char *sql = "UPDATE student SET name = '' WHERE NO = ''";
 	int check = 0;
 	char *sql;
@@ -59,6 +59,7 @@ bool StudentOpe::update(string update, string NO, int type)
 		base.append(NO);
 		base.append("'");
 		sql = const_cast<char*>(base.c_str());
+		//cout << sql << endl;
 		check = db.ExecDML(sql);
 		break;
 

@@ -13,7 +13,7 @@ AdminOpe::AdminOpe(){
 
 bool AdminOpe::updateStudent(string update, string NO, int type)
 {
-	string base = "UPDATE student SET";
+	string base = "UPDATE student SET ";
 	//char *sql = "UPDATE student SET name = '' WHERE NO = ''";
 	int check = 0;
 	char *sql;
@@ -138,8 +138,8 @@ bool AdminOpe::addAdmin(Admin a){
 		return false;
 }
 
-bool AdminOpe::login(string email, string pass){
-	string s = "SELECT id FROM admin WHERE email = '";
+int AdminOpe::login(string email, string pass){
+	string s = "SELECT role FROM admin WHERE email = '";
 	s.append(email);
 	s.append("' and pass = '");
 	s.append(pass);
@@ -151,18 +151,21 @@ bool AdminOpe::login(string email, string pass){
 	if (query.FieldIsNull(0))
 	{
 		query.Finalize();
-		return false;
+		return -1;
 	}
 
 	else
-	{
+	{	
+		int role;
+		query.GetIntValue(0, role);
 		query.Finalize();
-		return true;
+		return role;
 	}
 
 }
 
 list<Student> AdminOpe::getAll(){
+	cout << "ok" << endl;
 	const char *sql = "SELECT * FROM student";
 	DbQuery query = db.ExecQuery(sql);
 	list<Student> students;
@@ -184,36 +187,54 @@ list<Student> AdminOpe::getAll(){
 		query.GetStringValue(6, class_name);
 		Student s(id, NO, name, email, sex, age, class_name);
 		students.push_front(s);
-
+		query.NextRow();
 	}
 
 	return students;
 }
 
-Student AdminOpe::getByNO(string)
+Student AdminOpe::getByNO(string number)
 {
-	const char *sql = "SELECT * FROM student";
+	string s = "SELECT * FROM student WHERE NO = '";
+	s.append(number);
+	s.append("';");
+	char *sql = const_cast<char*>(s.c_str());
+	//cout << sql << endl;
 	DbQuery query = db.ExecQuery(sql);
-	int id;
-	char* NO;
-	char* name;
-	char* email;
-	char* sex;
-	int age;
-	char* class_name;
-	if (query.Eof())
+
+	if (!query.Eof())
 	{
-		cout << "不存在此学号" << endl;
+
+		string number = query.GetString(1);
+		string name = query.GetString(2);;
+		string email = query.GetString(3);
+		string sex = query.GetString(4);
+		int age;
+		query.GetIntValue(5, age);
+		string className = query.GetString(6);
+		//string pass = query.GetString(7);
+		query.Finalize();
+
+		return Student(number, name, email, sex, age, className);
 	}
+	//cout << "用户名或者密码错误" << endl;
+	else
+	{
+		Student stu;
+		stu.Id(-1);
+		return stu;
+	}
+}
 
-	query.GetIntValue(0, id);
-	query.GetStringValue(1, NO);
-	query.GetStringValue(2, name);
-	query.GetStringValue(3, email);
-	query.GetStringValue(4, sex);
-	query.GetIntValue(5, age);
-	query.GetStringValue(6, class_name);
-	query.Finalize();
-	return Student(id, NO, name, email, sex, age, class_name);
+bool AdminOpe::deleteStudent(string number){
+	string s = "DELETE FROM student WHERE number = '";
+	s.append(number);
+	s.append("'");
 
+	char *sql = const_cast<char*>(s.c_str());
+	int check = db.ExecDML(sql);
+	if (check == 1)
+		return true;
+	else
+		return false;
 }

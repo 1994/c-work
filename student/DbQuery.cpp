@@ -1,6 +1,7 @@
 #include "DbQuery.h"
 #include "DbException.h"
 #include <string>
+#include "iostream"
 
 DbQuery::DbQuery()
 {
@@ -197,11 +198,30 @@ bool DbQuery::GetStringValue(int nField, char *&rDest)
 		return false;
 	}
 	else
-	{
+	{	
+		//std::cout <<"没转换前：" <<sqlite3_column_text(mpStmt, nField) << std::endl;
 		rDest = const_cast<char *>((const char*)sqlite3_column_text(mpStmt, nField));
+		//std::cout << "转换后：" << rDest << std::endl;
 		return true;
 	}
 }
+
+char* DbQuery::GetString(int nField)
+{
+	if (FieldDataType(nField) == SQLITE_NULL)
+	{
+		return NULL;
+	}
+	else
+	{
+		//std::cout <<"没转换前：" <<sqlite3_column_text(mpStmt, nField) << std::endl;
+		char* rDest = const_cast<char *>((const char*)sqlite3_column_text(mpStmt, nField));
+		//std::cout << "转换后：" << rDest << std::endl;
+		return rDest;
+	}
+}
+
+
 bool DbQuery::GetStringValue(const char *szField, char *&rDest)
 {
 	int nField = FieldIndex(szField);
@@ -211,7 +231,6 @@ bool DbQuery::GetStringValue(const char *szField, char *&rDest)
 bool DbQuery::Eof()
 {
 	CheckStmt();
-
 	return mbEof;
 }
 
@@ -228,7 +247,7 @@ void DbQuery::NextRow()
 	}
 	else if (nRet == SQLITE_ROW)
 	{
-		// more rows, nothing to do  
+		
 	}
 	else
 	{

@@ -55,6 +55,10 @@ public:
 
 	Student();
 
-	Student(int, string, string, string, string, int, string);
+	Student(string, string, string, string, int, string);
+
+	Student(string, string, string, string, int, string,string);
+
+	Student(int,string, string, string, string, int, string);
 };
 
